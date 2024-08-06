@@ -78,12 +78,12 @@ export const getPresensiSession = async (req, res) => {
     const liveSesi = req.params.live_sesi; // Get liveSesi from URL parameter
   
     try {
-      const presensiData = await getPresensiBySession(liveSesi);
-    //   res.render('presensi_data', {
-    //     presensiData,
-    //     title: `Data Presensi untuk Sesi ${liveSesi}`,
-    //   });
-    res.status(200).json(presensiData);
+      const presensiSesi = await getPresensiBySession(liveSesi);
+      res.render('presensi_detail', {
+        presensiSesi,
+        title: `Data Presensi untuk Sesi ${liveSesi}`,
+      });
+    // res.status(200).json(presensiSesi);
     } catch (error) {
       console.error(error);
       res.status(500).json({

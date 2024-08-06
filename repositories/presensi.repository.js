@@ -13,7 +13,7 @@ export const createPresensi = async(presensiData)=>{
 
 export const getPresensi = async()=>{
     try {
-        const presensi = await Presensi.find();
+        const presensi = await Presensi.find()
         return presensi;
         
     } catch (error) {
@@ -23,9 +23,11 @@ export const getPresensi = async()=>{
 
 export const getPresensiBySession = async (liveSesi) => {
     try {
-        const presensiSession = await Presensi.find({ live_sesi: liveSesi });
+        const presensiSession = await Presensi.find({ live_sesi: liveSesi }).populate('pesertaId');
         return presensiSession;
     } catch (error) {
         throw error;
     }
 };
+
+    

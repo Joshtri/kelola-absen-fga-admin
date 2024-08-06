@@ -5,8 +5,47 @@
 
 </head>
 <body>
-    <%-include('partials/header') %>
+    <style>
 
+
+    </style>
+    <%-include('partials/header') %>
+    <div class="mt-5 container">
+        <div class="table-responsive">
+            <table class="table  table-hover table-borderless bdr table-dark align-middle rounded-2">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Peserta</th>
+                        <th>Status Kehadiran</th>
+                        <th>Jam Masuk</th>
+                        <th>Jam Keluar</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <% for(let i = 0; i < presensiSesi.length; i++) { %>
+                    <tr class="table-light">
+                        <td scope="row"><%= i + 1%></td>
+                        <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nama_peserta : 'N/A' %></td>
+                        <td>
+                            <% if (presensiSesi[i].status_kehadiran === 'hadir') { %>
+                                <span class="badge bg-success"><%= presensiSesi[i].status_kehadiran %></span>
+                            <% } else if (presensiSesi[i].status_kehadiran === 'alpha') { %>
+                                <span class="badge bg-danger"><%= presensiSesi[i].status_kehadiran %></span>
+                            <% } else { %>
+                                <span class="badge bg-secondary"><%= presensiSesi[i].status_kehadiran %></span>
+                            <% } %>
+                        </td>                        <td><%= presensiSesi[i].jam_masuk %></td>
+                        <td><%= presensiSesi[i].jam_keluar %></td>
+                    </tr>
+                    <% } %>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    
 
 
     
