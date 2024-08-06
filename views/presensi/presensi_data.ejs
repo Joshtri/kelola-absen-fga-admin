@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('partials/head') %>
+</head>
+<body>
+    <%-include('partials/header') %>
+    <div class="container mt-4">
+
+        <div>
+            <button class="btn btn-outline-dark mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Buat Presensi</button>
+        </div>
+
+        <!-- Modal -->
+        <%-include('presensi/presensi_add'); %>
+        <hr>
+
+        <div class="row">
+            <% for(let i = 0; i < sesi.length; i++) { %>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Sesi <%= sesi[i].sesi_ke %>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Presensi Sesi <%= sesi[i].sesi_ke %></h5>
+                        <p class="card-text">Detail presensi untuk sesi <%= sesi[i].sesi_ke %>.</p>
+                        <a href="/data/presensi/<%= sesi[i].sesi_ke %>" class="btn btn-primary">Lihat Presensi</a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%-include('partials/body') %>
+</body>
+</html>

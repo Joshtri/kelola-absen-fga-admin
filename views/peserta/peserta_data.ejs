@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('partials/head') %>
+</head>
+<body>
+    <%-include('partials/header') %>
+
+    <div class="container mt-4">
+        <h1><%= title %></h1>
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <!-- <th>ID</th> -->
+                    <th>Nama</th>
+                    <th>Nomor Registrasi</th>
+                    <th>Nomor Handphone</th>
+                    <th>Provider</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% peserta.forEach((itemPeserta, index)=> { %>
+                    <tr>
+                        <td><%= index + 1%></td>
+                        <!-- <td><%= itemPeserta._id %></td> -->
+                        <td><%= itemPeserta.nama_peserta %></td>
+                        <td><%= itemPeserta.nomor_registrasi %></td>
+                        <td><%= itemPeserta.nomor_handphone %></td>
+                        <td><%= itemPeserta.provider %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <%-include('partials/body') %>
+</body>
+</html>
