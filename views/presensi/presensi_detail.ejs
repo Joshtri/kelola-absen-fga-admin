@@ -5,18 +5,20 @@
 
 </head>
 <body>
-    <style>
-
-
-    </style>
-    <%-include('partials/header') %>
+    <%- include('partials/header') %>
     <div class="mt-5 container">
+        <button id="exportExcel" class="btn btn-success mb-3">Export to Excel</button>
+        <button id="exportCSV" class="btn btn-primary mb-3">Export to CSV</button>
         <div class="table-responsive">
-            <table class="table  table-hover table-borderless bdr table-dark align-middle rounded-2">
+            <table id="attendanceTable" class="table  table-hover table-borderless bdr table-dark align-middle rounded-2">
                 <thead class="table-dark">
                     <tr>
-                        <th>No</th>
+                        <th></th>
                         <th>Nama Peserta</th>
+                        <th>Nomor Registrasi</th>
+                        <th>Nomor Handphone</th>
+                        <th>Provider</th>
+                        <th>Email Terdaftar</th>
                         <th>Status Kehadiran</th>
                         <th>Jam Masuk</th>
                         <th>Jam Keluar</th>
@@ -25,8 +27,12 @@
                 <tbody class="table-group-divider">
                     <% for(let i = 0; i < presensiSesi.length; i++) { %>
                     <tr class="table-light">
-                        <td scope="row"><%= i + 1%></td>
+                        <td scope="row"></td>
                         <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nama_peserta : 'N/A' %></td>
+                        <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nomor_registrasi : 'N/A' %></td>
+                        <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nomor_handphone : 'N/A' %></td>
+                        <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.provider : 'N/A' %></td>
+                        <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.email_peserta : 'N/A' %></td>
                         <td>
                             <% if (presensiSesi[i].status_kehadiran === 'hadir') { %>
                                 <span class="badge bg-success"><%= presensiSesi[i].status_kehadiran %></span>
@@ -35,20 +41,75 @@
                             <% } else { %>
                                 <span class="badge bg-secondary"><%= presensiSesi[i].status_kehadiran %></span>
                             <% } %>
-                        </td>                        <td><%= presensiSesi[i].jam_masuk %></td>
+                        </td>
+                        <td><%= presensiSesi[i].jam_masuk %></td>
                         <td><%= presensiSesi[i].jam_keluar %></td>
                     </tr>
                     <% } %>
-
                 </tbody>
-
             </table>
         </div>
     </div>
-    
+    <%- include('partials/body') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+        document.getElementById('exportExcel').addEventListener('click', function() {
+            exportTableToExcel('attendanceTable', 'attendance.xlsx');
+        });
 
+        document.getElementById('exportCSV').addEventListener('click', function() {
+            exportTableToCSV('attendanceTable', 'attendance.csv');
+        });
 
-    
-    <%-include('partials/body') %>
+        function exportTableToExcel(tableID, filename = ''){
+            var downloadLink;
+            var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+            
+            var workbook = XLSX.utils.table_to_book(tableSelect, {sheet: "Sheet1"});
+            var wbout = XLSX.write(workbook, {bookType:'xlsx', type:'binary'});
+
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            var blob = new Blob([s2ab(wbout)], {type: dataType});
+            downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = filename;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        function exportTableToCSV(tableID, filename = '') {
+            var csv = [];
+            var rows = document.querySelectorAll("table#" + tableID + " tr");
+            
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                
+                for (var j = 0; j < cols.length; j++) 
+                    row.push(cols[j].innerText);
+                
+                csv.push(row.join(","));        
+            }
+
+            var csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+
+            var downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
 </body>
+
 </html>
