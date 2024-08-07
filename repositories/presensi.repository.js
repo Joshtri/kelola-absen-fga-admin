@@ -30,4 +30,10 @@ export const getPresensiBySession = async (liveSesi) => {
     }
 };
 
-    
+export const updatePresensiByLiveSesiandPesertaId = async(pesertaId,liveSesi)=>{
+    try {
+        // const updatePresensi = await Presensi.findOneAndUpdate({})
+    } catch (error) {
+        throw error;
+    }
+}

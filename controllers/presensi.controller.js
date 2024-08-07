@@ -59,6 +59,8 @@ export const getPresensiPage = async (req, res) => {
     try {
         const presensi = await getPresensi();
         const sesi = await getSesi();
+        // Sort the sesi array by sesi_ke in ascending order
+        sesi.sort((a, b) => a.sesi_ke - b.sesi_ke);
 
         res.render('presensi_data',{
             title,
@@ -93,3 +95,4 @@ export const getPresensiSession = async (req, res) => {
       });
     }
 };
+
