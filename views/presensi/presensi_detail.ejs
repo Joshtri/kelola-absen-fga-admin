@@ -15,10 +15,12 @@
         <button id="exportCSV" class="btn btn-primary mb-3 btn-sm">Export to CSV</button>
 
         <div class="table-responsive">
-            <table id="attendanceTable" class="table  table-hover table-borderless bdr table-dark align-middle rounded-2">
+            <table id="attendanceTable" class="table table-sm table-hover table-borderless table-dark align-middle rounded-2">
                 <thead class="table-dark">
                     <tr>
                         <th></th>
+                        <th>PT Penyelenggara</th>
+                        <th>Tema Pelatihan</th>
                         <th>Nama Peserta</th>
                         <th>Nomor Registrasi</th>
                         <th>Nomor Handphone</th>
@@ -33,6 +35,8 @@
                     <% for(let i = 0; i < presensiSesi.length; i++) { %>
                     <tr class="table-light">
                         <td scope="row"></td>
+                        <td style="font-size: 12px;">UNIVERSITAS NUSA CENDANA</td>
+                        <td style="font-size: 12px;">Database (Database Design & Programming with SQL)</td>
                         <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nama_peserta : 'N/A' %></td>
                         <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nomor_registrasi : 'N/A' %></td>
                         <td><%= presensiSesi[i].pesertaId ? presensiSesi[i].pesertaId.nomor_handphone : 'N/A' %></td>
