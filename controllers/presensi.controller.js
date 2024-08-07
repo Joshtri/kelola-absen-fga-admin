@@ -81,6 +81,7 @@ export const getPresensiSession = async (req, res) => {
       const presensiSesi = await getPresensiBySession(liveSesi);
       res.render('presensi_detail', {
         presensiSesi,
+        liveSesi,
         title: `Data Presensi untuk Sesi ${liveSesi}`,
       });
     // res.status(200).json(presensiSesi);
