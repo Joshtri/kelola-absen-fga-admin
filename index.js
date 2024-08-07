@@ -6,7 +6,8 @@ import pesertaRoute from './routes/peserta.route.js';
 import presensiRoute from './routes/presensi.route.js';
 import connectDB from './config/dbConfig.js';
 import sesiRoute from './routes/sesi.route.js';
-
+import indexRoute from './routes/index.route.js';
+import dashboardRoute from './routes/dashboard.route.js';
 
 config();
 connectDB();
@@ -36,8 +37,9 @@ app.set("views",[
     path.join(__dirname, "/views/presensi")
 ]);
 
-
+app.use('/adm', dashboardRoute)
 app.use('/data',pesertaRoute, presensiRoute,sesiRoute)
+app.use(indexRoute);
 
 app.listen(PORT,()=>{
     console.log(`app run on port : `, PORT);
