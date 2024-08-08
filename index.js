@@ -4,10 +4,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pesertaRoute from './routes/peserta.route.js';
 import presensiRoute from './routes/presensi.route.js';
+import session from 'express-session';
 import connectDB from './config/dbConfig.js';
 import sesiRoute from './routes/sesi.route.js';
 import indexRoute from './routes/index.route.js';
 import dashboardRoute from './routes/dashboard.route.js';
+import MongoStore from 'connect-mongo';
+
 
 config();
 connectDB();
@@ -29,6 +32,23 @@ app.use('/popper', express.static(path.join(__dirname, 'node_modules/@popperjs/c
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+
+// Session middleware
+app.use(
+    session({
+      proxy: true,
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: true,
+      name: 'fga',
+      store: MongoStore.create({
+        mongoUrl: process.env.APP_MONGODB_URI, // Replace with your MongoDB connection string
+        collectionName: 'sessions'
+      })
+    })
+);
+
+
 app.set('view engine', 'ejs');
 
 app.set("views",[
