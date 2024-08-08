@@ -1,4 +1,4 @@
-import { createPresensi, getPresensi, getPresensiBySession, totalHadirBySesi, totalPesertaBySesi} from '../repositories/presensi.repository.js';
+import { createPresensi, getPresensi, getPresensiBySession, totalAlphaBySesi, totalHadirBySesi, totalPesertaBySesi} from '../repositories/presensi.repository.js';
 import { getSesi } from '../repositories/sesi.repository.js';
 
 // Controller untuk membuat presensi baru
@@ -81,9 +81,17 @@ export const getPresensiSession = async (req, res) => {
   
     try {
       const presensiSesi = await getPresensiBySession(liveSesi);
+      const totalHadir = await totalHadirBySesi(liveSesi);
+      const totalAlpha = await totalAlphaBySesi(liveSesi);
+      const totalPeserta = await totalPesertaBySesi(liveSesi);
+    //   const totalPeserta = await totalPesertaByPresensi(liveSesi);
+
       res.render('presensi_detail', {
         presensiSesi,
         liveSesi,
+        totalHadir,
+        totalAlpha,
+        totalPeserta,
         title: `Data Presensi untuk Sesi ${liveSesi}`,
       });
     // res.status(200).json(presensiSesi);
@@ -113,10 +121,20 @@ export const totalHadir = async (req, res) => {
     try {
         const { liveSesi } = req.params; // Assuming liveSesi is passed as a URL parameter
         const totalHadir = await totalHadirBySesi(liveSesi);
+
         res.status(200).json(totalHadir);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-// export const
+export const totalAlpha = async(req,res)=>{
+    try {
+        const {liveSesi} = req.params;
+        const totalAlpha = await totalAlphaBySesi(liveSesi);
+
+        res.status(200).json(totalAlpha);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}

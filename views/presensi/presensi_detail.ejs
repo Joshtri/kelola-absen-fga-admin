@@ -8,11 +8,26 @@
     <%- include('partials/header') %>
     <div class="mt-5 container">
         <a href="/data/presensi" class="btn btn-warning btn-sm">Kembali</a>
-        <hr>
+
         <h3 class="text-center">Presensi sesi-<%= liveSesi %></h3>
 
-        <button id="exportExcel" class="btn btn-success mb-3 btn-sm">Export to Excel</button>
-        <button id="exportCSV" class="btn btn-primary mb-3 btn-sm">Export to CSV</button>
+
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <button id="exportExcel" class="btn btn-success mb-3 btn-sm">Export to Excel</button>
+                <button id="exportCSV" class="btn btn-primary mb-3 btn-sm">Export to CSV</button>
+                <hr>
+
+                <h5>Rincian Presensi</h5>
+                <p>Total Peserta : <%= totalPeserta %></p>
+                <p>Total Alpha Peserta : <%= totalAlpha %></p>
+                <p>Total Kehadiran Peserta : <%= totalHadir %></p>
+            </div>
+            
+            
+        </div>
+       
 
         <div class="table-responsive">
             <table id="attendanceTable" class="table table-sm table-hover table-borderless table-dark align-middle rounded-2">
