@@ -1,1 +1,4 @@
 GET http://localhost:3000/data/presensi/2
+
+###
+GET http://localhost:3000/data/total_presensi/3

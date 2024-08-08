@@ -37,3 +37,38 @@ export const updatePresensiByLiveSesiandPesertaId = async(pesertaId,liveSesi)=>{
         throw error;
     }
 }
+
+export const totalPesertaBySesi = async(liveSesi)=>{
+    try {
+        const totalPesertaPresensi = await Presensi.countDocuments({live_sesi:liveSesi});
+        return totalPesertaPresensi;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const totalHadirBySesi = async(liveSesi)=>{
+    try {
+        const totalHadir = await Presensi.countDocuments({
+            live_sesi:liveSesi,
+            status_kehadiran: 'hadir'
+        });
+
+        return totalHadir
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const totalAlphaBySesi = async(liveSesi)=>{
+    try {
+        const totalAlpha = await Presensi.countDocuments({
+            live_sesi: liveSesi,
+            status_kehadiran:'alpha'
+        });
+
+        return totalAlpha;
+    } catch (error) {
+        throw error;
+    }
+}

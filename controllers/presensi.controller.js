@@ -1,4 +1,4 @@
-import { createPresensi, getPresensi, getPresensiBySession} from '../repositories/presensi.repository.js';
+import { createPresensi, getPresensi, getPresensiBySession, totalHadirBySesi, totalPesertaBySesi} from '../repositories/presensi.repository.js';
 import { getSesi } from '../repositories/sesi.repository.js';
 
 // Controller untuk membuat presensi baru
@@ -96,3 +96,27 @@ export const getPresensiSession = async (req, res) => {
     }
 };
 
+
+export const totalPesertaByPresensi = async(req,res)=>{
+    try {
+        const { liveSesi } = req.params; // Assuming liveSesi is passed as a URL parameter
+
+        const totalKehadiran = await totalPesertaBySesi(liveSesi);
+        res.status(200).json(totalKehadiran);
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+export const totalHadir = async (req, res) => {
+    try {
+        const { liveSesi } = req.params; // Assuming liveSesi is passed as a URL parameter
+        const totalHadir = await totalHadirBySesi(liveSesi);
+        res.status(200).json(totalHadir);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// export const
