@@ -1,5 +1,5 @@
 import { createPresensi, getPresensi, getPresensiBySession, totalAlphaBySesi, totalHadirBySesi, totalPesertaBySesi} from '../repositories/presensi.repository.js';
-import { getSesi } from '../repositories/sesi.repository.js';
+import { getSesi, getSetSesi } from '../repositories/sesi.repository.js';
 
 // Controller untuk membuat presensi baru
 export const createPresensiController = async (req, res) => {
@@ -59,14 +59,19 @@ export const getPresensiPage = async (req, res) => {
     try {
         const presensi = await getPresensi();
         const sesi = await getSesi();
+        const latestSetSesi = await getSetSesi();
+
         // Sort the sesi array by sesi_ke in ascending order
         sesi.sort((a, b) => a.sesi_ke - b.sesi_ke);
 
         res.render('presensi_data',{
             title,
             sesi,
-            presensi
+            presensi,
+            latestSetSesi
         });
+
+        console.log(latestSetSesi);
     } catch (error) {
         console.error(error);
         return res.status(500).json({

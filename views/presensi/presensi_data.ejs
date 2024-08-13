@@ -9,8 +9,12 @@
 
         <div>
             <button class="btn btn-outline-dark mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Buat Presensi</button>
-            <button class="btn btn-outline-dark mb-4" data-bs-toggle="modal" data-bs-target="#sesiSetModal">Sesi Aktif</button>
+            <button class="btn btn-outline-success mb-4" data-bs-toggle="modal" data-bs-target="#sesiSetModal">Sesi Aktif</button>
         </div>
+
+        <p class="text-dark fw-medium">
+            Sesi yang aktif untuk presensi saat ini : <span class="badge bg-success">Sesi <%= latestSetSesi[0].sesiActive %></span>
+        </p>
 
         <!-- Modal -->
         <%-include('presensi/presensi_add'); %>
