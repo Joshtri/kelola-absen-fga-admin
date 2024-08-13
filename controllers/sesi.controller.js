@@ -1,4 +1,4 @@
-import { createSesi } from "../repositories/sesi.repository.js";
+import { createSesi, setSesiActive } from "../repositories/sesi.repository.js";
 import { getPeserta } from "../repositories/peserta.repository.js";
 import { createPresensi } from "../repositories/presensi.repository.js";
 
@@ -40,10 +40,27 @@ export const createSesiController = async (req, res) => {
 };
 
 
-export const updatePresensiByPeserta = async(req,res)=>{
+export const createSesiActive = async(req,res)=>{
     try {
-      
+        
+        const setActiveData = req.body;
+        const newActiveData = await setSesiActive(setActiveData);
+
+        res.redirect('/data/presensi');
+
     } catch (error) {
-        throw error;
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+        });
     }
-};
+}
+
+// export const updatePresensiByPeserta = async(req,res)=>{
+//     try {
+      
+//     } catch (error) {
+//         throw error;
+//     }
+// };

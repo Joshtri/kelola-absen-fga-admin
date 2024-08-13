@@ -1,4 +1,5 @@
 import Sesi from "../models/sesi.model.js";
+import SetSesiActive from "../models/set_sesi.model.js";
 
 export const getSesi = async()=>{
     try {
@@ -15,6 +16,15 @@ export const createSesi = async(sesiData)=>{
         return newSesi;
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const setSesiActive = async(sesiSetActiveData)=>{
+    try {
+        const newSetActive = await SetSesiActive.create(sesiSetActiveData)
+        return newSetActive;
+    } catch (error) {
+        throw error;
     }
 }
 
